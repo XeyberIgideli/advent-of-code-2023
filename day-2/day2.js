@@ -47,3 +47,36 @@ for(let [key,value] of Object.entries(newobj)) {
     }
 }
 console.log(totalSum)
+
+
+// Part 2
+
+for(let line of text.split('\r\n') ) {
+     let splitted = line.split(':')
+     let gameId = splitted[0]
+     obj[gameId] = {}
+     cubes.map(cube => {
+        obj[gameId][cube] = []
+     })
+     let pured = splitted[1].split(';') 
+     pured.map(item => {  
+        const slarray = item.trim().split(', ')  
+        slarray.forEach(pair => {
+            const [value,color] = pair.split(' ')
+            obj[gameId][color].push(+value)
+        })
+     })
+
+    } 
+    
+for(let [key,value] of Object.entries(obj)) { 
+     for(let [key2,value2] of Object.entries(value)) {
+      value2 = Math.max(...value2)
+      obj[key][key2] = value2
+    }   
+
+    obj[key] = Object.values(value).reduce((a,b) => a * b, 1)
+    totalSum += obj[key]
+}
+
+ console.log(totalSum)
